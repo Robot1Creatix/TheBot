@@ -7,7 +7,8 @@ import java.util.List;
 import com.creatix.TheBot.objects.Classification;
 import com.creatix.TheBot.objects.Classification.ClassType;
 
-import net.dv8tion.jda.entities.User;
+import com.sun.istack.internal.NotNull;
+import net.dv8tion.jda.entities.*;
 import net.dv8tion.jda.events.ReadyEvent;
 import net.dv8tion.jda.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
@@ -23,6 +24,7 @@ public class UserManager extends ListenerAdapter{
 		Add("225611033509756928", SYSTEM);
 		Add("123471451750793219", ASSET);
 		Add("222052803013509131", IRRELEVANT);
+		Add("179137236783071232", ASSET);
 	}
 
 	public static final Classification IRRELEVANT = new Classification("Irrelevant", 0.0F, Classification.ClassType.Irrelevant, "Ignore."),
@@ -45,6 +47,15 @@ public class UserManager extends ListenerAdapter{
 			Users.add(id);
 			System.out.println("User '" + id + "' added to list with classification "+c.className+"; Access Level : "+c.accessLevel);
 		}
+	}
+	public static void SetClassification(User user, Classification classification){
+		if(!_Humans.containsKey(user.getId())) {
+			_Humans.put(user.getId(), classification);
+		}else{
+			_Humans.replace(user.getId(), classification);
+
+		}
+
 	}
 	@Override
     public void onReady(ReadyEvent event) {
@@ -77,4 +88,22 @@ public class UserManager extends ListenerAdapter{
     	return null;
     	
     }
+    public static Channel getChannelByUser(@NotNull User user, Guild guild){
+		List<VoiceChannel> channels = guild.getVoiceChannels();
+		List<Channel> ret = new ArrayList<>();
+		for(VoiceChannel chan : channels){
+			if(chan.getUsers().contains(user))
+				ret.add(chan);
+		}
+		if(ret.size() != 0)
+			return ret.get(0);
+		List<TextChannel> texts = guild.getTextChannels();
+		for(TextChannel chan : texts){
+			if(chan.getUsers().contains(user))
+				ret.add(chan);
+		}
+		if(ret.size() != 0)
+			return ret.get(0);
+		return null;
+	}
 }

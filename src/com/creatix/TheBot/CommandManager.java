@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.creatix.TheBot.chat.BMessageManager;
+import com.creatix.TheBot.objects.Classification;
 import com.creatix.TheBot.objects.Command;
 import com.creatix.TheBot.objects.Subject;
 
@@ -113,6 +114,35 @@ public class CommandManager {
 			long memorySize = ((com.sun.management.OperatingSystemMXBean) ManagementFactory
 			        .getOperatingSystemMXBean()).getTotalPhysicalMemorySize();
 			BMessageManager.reply(msg, "I\'am  alive\nI\'am using "+used+"mb RAM of "+memorySize / mb+"mb!\nI\'am working with "+Thread.currentThread().getId()+" thread");
+		}));
+		registerCommand(new Command("shutdown", "kill","Kill the bot", true, (msg, args, guild) -> {
+			if(!UserManager.getClassification(msg.getAuthor()).equals(UserManager.ADMIN)){
+				BMessageManager.reply(msg, "[ ! ] Shutdown Imminent\nEmploying Countermeasures...");
+				UserManager.SetClassification(msg.getAuthor(), UserManager.THREAT);
+				guild.getUserById(SystemCore.lang.getLocalizedName("admin")).getPrivateChannel().sendMessage("!!Shutdown attempt detected!!\n"+new Subject(msg.getAuthor()).Monitor(guild));
+				return;
+			}else{
+
+			}
+		}));
+		registerCommand(new Command("reorganize", "reorg","Reorganize classification(args[1]) for user(args[0])", true, (msg, args, guild) -> {
+			if(args.length < 2)
+				return;
+			Classification cl = UserManager.getClassByName(args[1]);
+			User us = guild.getUsersByName(args[0]).get(0);
+			User usr = guild.getUserById(args[0]);
+			User user;
+			if(cl == null)
+				return;
+			if(us != null){
+				user = us;
+			}else if(usr != null){
+				user = usr;
+			}else {
+				return;
+			}
+			UserManager.SetClassification(user, cl);
+			BMessageManager.sendMessage(msg.getChannel(), "```Classification was edited for "+guild.getEffectiveNameForUser(user)+" to "+cl.className+" by "+guild.getEffectiveNameForUser(msg.getAuthor())+"```");
 		}));
 	}
 	private static void commandList(Message msg){

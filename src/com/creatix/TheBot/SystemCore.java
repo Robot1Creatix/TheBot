@@ -27,7 +27,7 @@ public class SystemCore {
 
 	public static void main(String[] args) throws IOException, URISyntaxException
 	{
-		lang = new ExternalLangFile("F:/Bot/lang.lang");
+		lang = new ExternalLangFile("/home/creatix/lang.lang");
 		UserManager.InitializeAssets();
 		_T = lang.getLocalizedName("token");
 		try {

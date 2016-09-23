@@ -3,6 +3,7 @@ package com.creatix.TheBot.objects;
 import com.creatix.TheBot.SystemCore;
 import com.creatix.TheBot.UserManager;
 
+import com.sun.istack.internal.NotNull;
 import net.dv8tion.jda.MessageBuilder;
 import net.dv8tion.jda.MessageBuilder.Formatting;
 import net.dv8tion.jda.entities.Emote;
@@ -18,7 +19,7 @@ public class Subject {
 	public Classification classif;
 	public String un, id;
 	
-	public Subject(User user){
+	public Subject(@NotNull  User user){
 		this.user = user;
 		this.classif = UserManager.getClassification(user);
 		this.meta = SystemCore.lang.getLocalizedName("meta." + user.getId() + ".text").equals("meta." + user.getId() + ".text") ? "MISSING DATA" : SystemCore.lang.getLocalizedName("meta." + user.getId() + ".text");
@@ -49,7 +50,8 @@ public class Subject {
 		ret += "Projection:     "+classif.className+"\n";
 		ret += "AccessLevel:    "+classif.accessLevel+"\n\n";
 		ret += "Conclusion:     "+classif.conclusion+"\n\n";
-		ret += "OnlineStatus:   "+user.getOnlineStatus().name();
+		ret += "OnlineStatus:   "+user.getOnlineStatus().name()+"\n";
+		ret += "Location:       "+(UserManager.getChannelByUser(user, guild) == null ? "Locating failed" : UserManager.getChannelByUser(user, guild).getName());
 		return ret;
 	}
 	
