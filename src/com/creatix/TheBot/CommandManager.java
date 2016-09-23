@@ -122,7 +122,7 @@ public class CommandManager {
 				guild.getUserById(SystemCore.lang.getLocalizedName("admin")).getPrivateChannel().sendMessage("!!Shutdown attempt detected!!\n"+new Subject(msg.getAuthor()).Monitor(guild));
 				return;
 			}else{
-
+				SystemCore.bot.shutdown();
 			}
 		}));
 		registerCommand(new Command("reorganize", "reorg","Reorganize classification(args[1]) for user(args[0])", true, (msg, args, guild) -> {

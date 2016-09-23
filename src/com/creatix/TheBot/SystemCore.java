@@ -12,8 +12,10 @@ import com.creatix.TheBot.chat.BMessageManager;
 import com.creatix.TheBot.objects.Command;
 import com.creatix.langmanager.ExternalLangFile;
 
+import com.sun.istack.internal.Nullable;
 import net.dv8tion.jda.JDA;
 import net.dv8tion.jda.JDABuilder;
+
 
 public class SystemCore {
 	
@@ -37,5 +39,8 @@ public class SystemCore {
 		} catch (LoginException | IllegalArgumentException | InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	public static void exit(int code, @Nullable Throwable cause) {
+		System.exit(code);
 	}
 }//Hello World!
