@@ -30,4 +30,4 @@ public class Command {
 		this(name, name, "", admin,action);
 	}
 	
-}
+}//
