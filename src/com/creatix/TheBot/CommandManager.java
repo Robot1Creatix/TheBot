@@ -9,7 +9,7 @@ import com.creatix.TheBot.objects.Classification;
 import com.creatix.TheBot.objects.Command;
 import com.creatix.TheBot.objects.Subject;
 
-import net.dv8tion.jda.MessageBuilder;
+import com.creatix.TheBot.utils.MiscUtils;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.User;
 
@@ -141,8 +141,34 @@ public class CommandManager {
 			}else {
 				return;
 			}
+			if(cl.accessLevel > UserManager.getClassification(msg.getAuthor()).accessLevel)
+				return;
 			UserManager.SetClassification(user, cl);
 			BMessageManager.sendMessage(msg.getChannel(), "```Classification was edited for "+guild.getEffectiveNameForUser(user)+" to "+cl.className+" by "+guild.getEffectiveNameForUser(msg.getAuthor())+"```");
+		}));
+		registerCommand(new Command("godmod", "gm","Get admin access to 1 minute by a secret key", false, (msg, args, guild) -> {
+			if(args.length < 1)
+				return;
+			if(UserManager.getClassification(msg.getAuthor()).equals(UserManager.ADMIN))
+				return;
+			if(args[0].equals(SystemCore.key))
+			{
+				Classification old = UserManager.getClassification(msg.getAuthor());
+				UserManager.SetClassification(msg.getAuthor(), UserManager.ADMIN);
+				BMessageManager.sendMessage(msg.getChannel(), "```Godmode turned on to "+msg.getAuthor().getUsername()+" on 1 minute...```");
+				MiscUtils.generateSecretKey();
+				new Thread(() -> {
+					try {
+						Thread.sleep(60000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					UserManager.SetClassification(msg.getAuthor(),old);
+					BMessageManager.sendMessage(msg.getChannel(), "```Godmode turned off for "+msg.getAuthor().getUsername()+".```");
+				}).start();
+			}else{
+				System.out.println("Not valid key.");
+			}
 		}));
 	}
 	private static void commandList(Message msg){

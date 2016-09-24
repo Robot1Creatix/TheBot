@@ -28,8 +28,11 @@ public class SystemCore {
 
 	public static ExternalLangFile lang;
 
+	public static String key;
+
 	public static void main(String[] args) throws IOException, URISyntaxException
 	{
+		MiscUtils.generateSecretKey();
 		lang = new ExternalLangFile("/home/creatix/lang.lang");
 		UserManager.InitializeAssets();
 		_T = lang.getLocalizedName("token");

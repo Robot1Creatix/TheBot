@@ -18,7 +18,7 @@ public class Command {
 		this.admin = admin;
 		this.action = action;
 		this.noadminaction = (msg, args, guild) -> {
-			BMessageManager.reply(msg, SystemCore.lang.getLocalizedName("notadmin.text"));
+			BMessageManager.reply(msg, SystemCore.lang.getLocalizedName("```Admin Request Detected.\nMonitoring sender...\nPermission denied.```"));
 		};
 	}
 	public Command(String name, String desc, boolean admin, ICommandAction action)

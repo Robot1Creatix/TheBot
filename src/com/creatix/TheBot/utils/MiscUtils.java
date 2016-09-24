@@ -1,10 +1,15 @@
 package com.creatix.TheBot.utils;
 
+import com.creatix.TheBot.SystemCore;
 import com.creatix.TheBot.UserManager;
 import com.creatix.TheBot.objects.Command;
 import com.creatix.TheBot.objects.Subject;
 
 import net.dv8tion.jda.entities.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MiscUtils {
 	public static String getArrayAsString(Object[] array, String format)
@@ -52,5 +57,16 @@ public class MiscUtils {
         }
         ret += hours+" hours "+mins+" minutes";
         return ret;
+    }
+
+    public static void generateSecretKey(){
+        Random r = new Random();
+        int length = r.nextInt(10) + 5;
+        char[] ret = new char[length];
+        for (int i = 0; i < length; i++){
+            ret[i] = (char)(r.nextInt('z' - 'a') + (r.nextBoolean() ? 'A' : 'a'));
+        }
+        System.out.println("Secret key : "+new String(ret));
+        SystemCore.key = new String(ret);
     }
 }
