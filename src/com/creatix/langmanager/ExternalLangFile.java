@@ -57,7 +57,18 @@ protected File langFile;
 			lang.put(b[0],b[1]);
 		}	
 	}
+
+	public void update() throws IOException {
+		lang.clear();
+		handle();
+	}
+
 	public String getLocalizedName(String key){
+		try {
+			update();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if(!lang.containsKey(key))
 			return key;
 		return lang.get(key);

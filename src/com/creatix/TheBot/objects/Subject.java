@@ -12,6 +12,9 @@ import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.User;
 import net.dv8tion.jda.entities.impl.EmoteImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Subject {
 
 	protected User user;
@@ -23,7 +26,7 @@ public class Subject {
 		this.user = user;
 		this.classif = UserManager.getClassification(user);
 		this.meta = SystemCore.lang.getLocalizedName("meta." + user.getId() + ".text").equals("meta." + user.getId() + ".text") ? "MISSING DATA" : SystemCore.lang.getLocalizedName("meta." + user.getId() + ".text");
-		this.id = (classif.equals(UserManager.ADMIN) ? "Redacted" : user.getId());
+		this.id = (classif.equals(UserManager.ADMIN) ? "Redacted" : "XXXXXXXXXXX/"+user.getId().substring(11));
 		this.un = (classif.equals(UserManager.ADMIN) ? "Redacted" : user.getUsername());
 	}
 
@@ -57,6 +60,13 @@ public class Subject {
 	
 	public static Subject getSubjectByUser(User user){
 		return new Subject(user);
+	}
+	public static List<Subject> getSubjects(List<User> user){
+		List<Subject> list = new ArrayList<>();
+		for(User u : user){
+			list.add(getSubjectByUser(u));
+		}
+		return list;
 	}
 
 }

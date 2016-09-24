@@ -1,28 +1,18 @@
 package com.creatix.TheBot.chat;
 
-import static com.creatix.TheBot.SystemCore.bot;
 import static com.creatix.TheBot.chat.BMessageManager.reply;
 
 import com.creatix.TheBot.CommandManager;
-import com.creatix.TheBot.SystemCore;
 import com.creatix.TheBot.UserManager;
-import com.creatix.TheBot.objects.Classification;
 import com.creatix.TheBot.objects.Command;
 import com.creatix.TheBot.utils.MiscUtils;
 
 import net.dv8tion.jda.MessageBuilder;
-import net.dv8tion.jda.entities.Guild;
 import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.MessageChannel;
 import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.entities.VoiceChannel;
 import net.dv8tion.jda.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.hooks.ListenerAdapter;
-import net.dv8tion.jda.managers.AudioManager;
-
-import java.io.IOException;
-
-import javax.jws.soap.SOAPBinding.Use;
 
 public class BMessageManager extends ListenerAdapter {
 

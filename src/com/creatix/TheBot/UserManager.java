@@ -30,7 +30,7 @@ public class UserManager extends ListenerAdapter{
 	public static final Classification IRRELEVANT = new Classification("Irrelevant", 0.0F, Classification.ClassType.Irrelevant, "Ignore."),
 										ASSET = new Classification("Asset", 0.5F, ClassType.Contingency, "Protection"),
 										ADMIN = new Classification("Admin", 1F, ClassType.Contingency, "Protection"),
-										SYSTEM = new Classification("System", 1F, ClassType.Contingency, "Redacted"),
+										SYSTEM = new Classification("System", 1.5F, ClassType.Contingency, "Redacted"),
 										THREAT = new Classification("Threat", 0.0F, ClassType.Threat, "Eliminate");
 										
 	
