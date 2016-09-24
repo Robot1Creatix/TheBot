@@ -10,6 +10,7 @@ import javax.security.auth.login.LoginException;
 import com.creatix.TheBot.audio.BAudioManager;
 import com.creatix.TheBot.chat.BMessageManager;
 import com.creatix.TheBot.objects.Command;
+import com.creatix.TheBot.utils.MiscUtils;
 import com.creatix.langmanager.ExternalLangFile;
 
 import com.sun.istack.internal.Nullable;
