@@ -3,10 +3,12 @@ package com.creatix.TheBot;
 import com.creatix.TheBot.chat.BMessageManager;
 import com.creatix.TheBot.objects.Classification;
 import com.creatix.TheBot.objects.IrrelevantNumber;
+import com.creatix.TheBot.objects.RelevantNumber;
 import com.creatix.TheBot.objects.Subject;
 import com.creatix.TheBot.utils.MiscUtils;
 import net.dv8tion.jda.OnlineStatus;
 import net.dv8tion.jda.entities.*;
+import net.dv8tion.jda.entities.impl.UserImpl;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -55,7 +57,6 @@ public class IrrelevantProtocol extends Thread {
             }
             if(ordinary.isEmpty()){
                 BMessageManager.sendMessage(msg.getChannel(), "```Ordinary users not found. Ignoring threats.```");
-                return;
             }
             List<IrrelevantNumber> nums = new ArrayList<>();
             for(User o : ordinary){
@@ -71,8 +72,37 @@ public class IrrelevantProtocol extends Thread {
             }
             if(nums.isEmpty()){
                 BMessageManager.sendMessage(msg.getChannel(), "```No Irrelevant numbers found```");
-                return;
             }
+            List<RelevantNumber> rnums = new ArrayList<>();
+            for(User r : relevants){
+                VoiceChannel voice = guild.getVoiceStatusOfUser(r).getChannel();
+                List<User> us = voice.getUsers();
+                for(User u : us){
+                    if(threats.contains(u)){
+                        if(r.getId().equals(SystemCore.lang.getLocalizedName("admin"))){
+                            rnums.add(new RelevantNumber(r, u));
+                        }
+                    }
+                }
+            }
+
+            if(!relevants.isEmpty()){
+                if(!rnums.isEmpty()){
+                    String ret = "";
+                    for(RelevantNumber r : rnums){
+                        ret += "```";
+                        ret += "[ ! ] Relevant Number [ ! ]\n";
+                        ret += "Threat for Admin Detected.\n";
+                        ret += new Subject((User) r.reason.get(0)).Monitor(guild)+"\n";
+                        ret += "Employing Countermeasures...\n";
+                        UserManager.SetClassification((User) r.reason.get(0), UserManager.THREAT);
+                        User threat = (User) r.reason.get(0);
+                        guild.getManager().setNickname(threat, "ADMIN THREAT #0");
+                        BMessageManager.sendMessage(msg.getChannel(),ret+"```");
+                    }
+                }
+            }
+
             String ret = "";
             for(IrrelevantNumber n : nums){
                 ret += "";

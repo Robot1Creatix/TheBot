@@ -30,12 +30,16 @@ public class SystemCore {
 
 	public static String key;
 
+	public static ConsoleManager cmng;
+
 	public static void main(String[] args) throws IOException, URISyntaxException
 	{
 		MiscUtils.generateSecretKey();
 		lang = new ExternalLangFile("/home/creatix/lang.lang");
 		UserManager.InitializeAssets();
 		_T = lang.getLocalizedName("token");
+		cmng = new ConsoleManager();
+		cmng.start();
 		try {
 			bot = new JDABuilder().setBotToken(_T).addListener(new BAudioManager()).addListener(new BMessageManager()).addListener(new UserManager()).addListener(new SystemManager()).buildBlocking();
 			commands = new ArrayList<Command>();

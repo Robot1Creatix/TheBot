@@ -73,6 +73,14 @@ public class UserManager extends ListenerAdapter{
     public static Classification getClassification(User user){
     	return _Humans.getOrDefault(user.getId(), IRRELEVANT);
     }
+	public static void SetClassification(String id, Classification classification) {
+		if (!_Humans.containsKey(id)) {
+			_Humans.put(id, classification);
+		} else {
+			_Humans.replace(id, classification);
+
+		}
+	}
     public static Classification getClassByName(String name){
     	name = name.toLowerCase();
     	if(name.equals("irrelevant"))
