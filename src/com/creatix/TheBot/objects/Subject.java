@@ -4,13 +4,9 @@ import com.creatix.TheBot.SystemCore;
 import com.creatix.TheBot.UserManager;
 
 import com.sun.istack.internal.NotNull;
-import net.dv8tion.jda.MessageBuilder;
-import net.dv8tion.jda.MessageBuilder.Formatting;
-import net.dv8tion.jda.entities.Emote;
 import net.dv8tion.jda.entities.Guild;
-import net.dv8tion.jda.entities.Message;
 import net.dv8tion.jda.entities.User;
-import net.dv8tion.jda.entities.impl.EmoteImpl;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +14,18 @@ import java.util.List;
 public class Subject {
 
 	protected User user;
-	protected String meta;
+	public String meta;
 	public Classification classif;
 	public String un, id;
+	public Number number;
 	
-	public Subject(@NotNull  User user){
+	public Subject(@NotNull User user){
 		this.user = user;
 		this.classif = UserManager.getClassification(user);
 		this.meta = SystemCore.lang.getLocalizedName("meta." + user.getId() + ".text").equals("meta." + user.getId() + ".text") ? "MISSING DATA" : SystemCore.lang.getLocalizedName("meta." + user.getId() + ".text");
-		this.id = (classif.equals(UserManager.ADMIN) ? "Redacted" : "XXXXXXXXXXX/"+user.getId().substring(11));
-		this.un = (classif.equals(UserManager.ADMIN) ? "Redacted" : user.getUsername());
+		this.id = (classif.equals(UserManager.ADMIN) ||  classif.equals(UserManager.ASSET) ? "Redacted" : user.getId());
+		this.un = (classif.equals(UserManager.ADMIN) ||  classif.equals(UserManager.ASSET)? "Redacted" : user.getUsername());
+		this.number = new Number(user.getId());
 	}
 
 	public User getUser() {
@@ -50,6 +48,7 @@ public class Subject {
 		ret += "-----------------------------------\n";
 		ret += "UserID:         "+id+"\n";
 		ret += "Username:       "+un+"\n";
+		ret += "UIN:            "+ number.getCoded()+"\n";
 		ret += "Projection:     "+classif.className+"\n";
 		ret += "AccessLevel:    "+classif.accessLevel+"\n\n";
 		ret += "Conclusion:     "+classif.conclusion+"\n\n";
@@ -68,5 +67,4 @@ public class Subject {
 		}
 		return list;
 	}
-
 }

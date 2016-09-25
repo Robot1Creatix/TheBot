@@ -25,6 +25,7 @@ public class UserManager extends ListenerAdapter{
 		Add("123471451750793219", ASSET);
 		Add("222052803013509131", IRRELEVANT);
 		Add("179137236783071232", ASSET);
+		Add("146285075175047169", THREAT);
 	}
 
 	public static final Classification IRRELEVANT = new Classification("Irrelevant", 0.0F, Classification.ClassType.Irrelevant, "Ignore."),
