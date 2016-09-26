@@ -91,8 +91,6 @@ public class CommandManager {
 					ret += "  - " + _s.getUsername() + " : " + _s.getOnlineStatus().name() + "\n";
 				}
 				BMessageManager.sendMessage(msg.getChannel(), "```" + ret + "```");
-			} else {
-				return;
 			}
 		}));
 		registerCommand(new Command("commands", "help", "Show all commands", false, (msg, args, guild) -> {

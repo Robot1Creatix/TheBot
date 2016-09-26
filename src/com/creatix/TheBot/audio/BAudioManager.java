@@ -29,18 +29,16 @@ public class BAudioManager extends ListenerAdapter{
     	
     }
     public void onVoiceJoin(VoiceJoinEvent event) {
-    	if(event.getUser().getId() == SystemCore.bot.getSelfInfo().getId())
-    	{
+		if (event.getUser().getId() == SystemCore.bot.getSelfInfo().getId()) {
 			try {
-	    		URLPlayer player;
+				URLPlayer player;
 				player = new URLPlayer(SystemCore.bot, new URL("http://projectbronze.comli.com/test/cyhm.mp3"));
 				event.getGuild().getAudioManager().setSendingHandler(player);
-				player.setVolume(0.025F);
-	    		player.play();
+				player.setVolume(0.03F);
+				player.play();
 			} catch (IOException | UnsupportedAudioFileException e) {
 				e.printStackTrace();
 			}
-    	}
-    }
-    
+		}
+	}
 }
