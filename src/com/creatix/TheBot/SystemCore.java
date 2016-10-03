@@ -51,4 +51,4 @@ public class SystemCore {
 	public static void exit(int code, @Nullable Throwable cause) {
 		System.exit(code);
 	}
-}//Hello World!
+}//Hello!
